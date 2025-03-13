@@ -9,27 +9,53 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        
+        :root {
+            --bg-color: #f8f9fa;
+            --container-bg: white;
+            --text-color: #333;
+            --heading-color: #2d3748;
+            --paragraph-color: #718096;
+            --icon-bg: #f0f4f8;
+            --accent-color: #4a6cf7;
+            --progress-bg: #e2e8f0;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark-theme {
+            --bg-color: #1a202c;
+            --container-bg: #2d3748;
+            --text-color: #e2e8f0;
+            --heading-color: #f7fafc;
+            --paragraph-color: #cbd5e0;
+            --icon-bg: #4a5568;
+            --accent-color: #63b3ed;
+            --progress-bg: #4a5568;
+            --shadow-color: rgba(0, 0, 0, 0.3);
         }
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            position: relative;
         }
         
         .maintenance-container {
             max-width: 800px;
             text-align: center;
-            background-color: white;
+            background-color: var(--container-bg);
             border-radius: 10px;
             padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px var(--shadow-color);
             animation: fadeIn 1s ease-in-out;
         }
         
@@ -42,7 +68,7 @@
             width: 120px;
             height: 120px;
             margin: 0 auto 30px;
-            background-color: #f0f4f8;
+            background-color: var(--icon-bg);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -52,24 +78,24 @@
         .icon svg {
             width: 60px;
             height: 60px;
-            color: #4a6cf7;
+            color: var(--accent-color);
         }
         
         h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
-            color: #2d3748;
+            color: var(--heading-color);
         }
         
         p {
             font-size: 1.1rem;
-            color: #718096;
+            color: var(--paragraph-color);
             margin-bottom: 30px;
         }
         
         .progress {
             height: 8px;
-            background-color: #e2e8f0;
+            background-color: var(--progress-bg);
             border-radius: 4px;
             margin-bottom: 30px;
             overflow: hidden;
@@ -79,7 +105,7 @@
         .progress-bar {
             position: absolute;
             height: 100%;
-            background-color: #4a6cf7;
+            background-color: var(--accent-color);
             border-radius: 4px;
             width: 70%;
             animation: progress 2s ease-in-out infinite alternate;
@@ -90,19 +116,36 @@
             to { width: 70%; }
         }
         
-        .contact {
-            font-size: 0.9rem;
-            color: #a0aec0;
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: var(--container-bg);
+            border: 1px solid var(--progress-bg);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            z-index: 100;
         }
         
-        .contact a {
-            color: #4a6cf7;
-            text-decoration: none;
-            font-weight: 600;
+        .theme-toggle svg {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-color);
         }
         
-        .contact a:hover {
-            text-decoration: underline;
+        .theme-toggle:hover {
+            transform: scale(1.05);
+        }
+        
+        .theme-toggle:focus {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
         }
         
         @media (max-width: 768px) {
@@ -124,10 +167,26 @@
                 width: 50px;
                 height: 50px;
             }
+            
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
         }
     </style>
 </head>
 <body>
+    <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg xmlns="http://www.w3.org/2000/svg" class="sun-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="moon-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+    </button>
+    
     <div class="maintenance-container">
         <div class="icon">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -141,6 +200,51 @@
             <div class="progress-bar"></div>
         </div>
     </div>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.querySelector('.theme-toggle');
+        const sunIcon = document.querySelector('.sun-icon');
+        const moonIcon = document.querySelector('.moon-icon');
+        
+        // Check for saved theme preference or use preferred color scheme
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Set initial theme
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            document.body.classList.add('dark-theme');
+            sunIcon.style.display = 'block';
+            moonIcon.style.display = 'none';
+        }
+        
+        // Toggle theme function
+        function toggleTheme() {
+            if (document.body.classList.contains('dark-theme')) {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        }
+        
+        // Add click event to theme toggle button
+        themeToggle.addEventListener('click', toggleTheme);
+        
+        // Update icons on initial load
+        if (document.body.classList.contains('dark-theme')) {
+            sunIcon.style.display = 'block';
+            moonIcon.style.display = 'none';
+        } else {
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+        }
+    </script>
 </body>
 </html>
 
